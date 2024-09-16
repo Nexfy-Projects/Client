@@ -6,7 +6,8 @@ import { Header } from './components/Header';
 import { Flex, Box, UIProvider } from '@yamada-ui/react';
 import { Sidebar } from './components/Sidebar';
 import { Footer } from './components/Footer';
-// import App from "next/app";
+import { ClientWrapper } from '@/utils/recoil/atom/ClientWrapper';
+// import _app from 'next/app';
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
   variable: '--font-geist-sans',
@@ -34,14 +35,16 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <AppRouterCacheProvider>
           <UIProvider>
-            <Header />
-            <Flex height='100vh' bg='gray.900' color='white' pt='60px'>
-              <Sidebar />
-              <Box as='main' flex='1' p={4}>
-                {children}
-              </Box>
-            </Flex>
-            <Footer />
+            <ClientWrapper>
+              <Header />
+              <Flex height='100vh' bg='gray.900' color='white' pt='60px'>
+                <Sidebar />
+                <Box as='main' flex='1' p={4}>
+                  {children}
+                </Box>
+              </Flex>
+              <Footer />
+            </ClientWrapper>
           </UIProvider>
         </AppRouterCacheProvider>
       </body>

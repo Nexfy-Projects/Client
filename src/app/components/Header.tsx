@@ -1,5 +1,5 @@
 // components/Header.tsx
-import { Flex, Input, IconButton, Avatar, Text } from '@yamada-ui/react';
+import { Flex, Input, IconButton, Avatar, Text, Link } from '@yamada-ui/react';
 import { Search } from '@mui/icons-material';
 
 export const Header = () => {
@@ -24,7 +24,9 @@ export const Header = () => {
 
       {/* ナビゲーションバー */}
       <Flex align='center' gap={30}>
-        <Text>ホーム</Text>
+        <Link href='/' color={'white'}>
+          ホーム
+        </Link>
         <Text>検索</Text>
         <Text>あなたのライブラリ</Text>
       </Flex>
@@ -49,7 +51,7 @@ export const Header = () => {
       </Flex>
 
       {/* プロフィール部分 */}
-      {/* <Avatar name='ユーザー名' src='/path-to-profile-image.jpg' /> */}
+      <Avatar name='ユーザー名' src='/path-to-profile-image.jpg' />
     </Flex>
   );
 };

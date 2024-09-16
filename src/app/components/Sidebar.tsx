@@ -6,7 +6,7 @@ export const Sidebar = () => {
       as='nav'
       width='250px'
       bg='gray.800'
-      p={4}
+      p={10}
       height='100vh'
       position='fixed'
       top='60px'
