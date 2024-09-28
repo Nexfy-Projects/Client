@@ -1,30 +1,29 @@
 // components/Header.tsx
-import { Flex, Input, IconButton, Avatar, Text, Link } from '@yamada-ui/react';
-import { Search } from '@mui/icons-material';
+import { Flex, Avatar, Text, Link } from "@yamada-ui/react";
 
 export const Header = () => {
   return (
     <Flex
-      as='header'
-      bg='gray.800'
-      color='white'
-      align='center'
-      justify='space-between'
+      as="header"
+      bg="gray.800"
+      color="white"
+      align="center"
+      justify="space-between"
       px={6}
       py={4}
-      boxShadow='md'
-      position='fixed'
-      top='0'
-      width='100%'
-      zIndex='10'>
+      boxShadow="md"
+      position="fixed"
+      top="0"
+      width="100%"
+      zIndex="10">
       {/* ロゴ部分 */}
-      <Text fontSize='xl' fontWeight='bold'>
+      <Text fontSize="xl" fontWeight="bold">
         Nextfy
       </Text>
 
       {/* ナビゲーションバー */}
-      <Flex align='center' gap={30}>
-        <Link href='/' color={'white'}>
+      <Flex align="center" gap={30}>
+        <Link href="/" color={"white"}>
           ホーム
         </Link>
         <Text>検索</Text>
@@ -32,7 +31,7 @@ export const Header = () => {
       </Flex>
 
       {/* 検索バー */}
-      <Flex align='center'>
+      {/* <Flex align='center'>
         <Input
           placeholder='曲やアーティストを検索'
           variant='filled'
@@ -48,10 +47,10 @@ export const Header = () => {
           color='white'
           _hover={{ bg: 'gray.600' }}
         />
-      </Flex>
+      </Flex> */}
 
       {/* プロフィール部分 */}
-      <Avatar name='ユーザー名' src='/path-to-profile-image.jpg' />
+      <Avatar name="ユーザー名" src="/path-to-profile-image.jpg" />
     </Flex>
   );
 };
