@@ -4,7 +4,7 @@ import "./globals.css";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { Header } from "./_components/Header";
 import { Flex, Box, UIProvider } from "@yamada-ui/react";
-import { Sidebar } from "./_components/Sidebar";
+// import { Sidebar } from "./_components/Sidebar";
 import { Footer } from "./_components/Footer";
 import { RedirectProvider } from "@/utils/context/loginContext";
 
@@ -39,7 +39,7 @@ export default function RootLayout({
               <Header />
 
               <Flex height="100vh" bg="gray.900" color="white" pt="60px">
-                <Sidebar />
+                {/* <Sidebar /> */}
                 <Box as="main" flex="1" p={4}>
                   {children}
                 </Box>

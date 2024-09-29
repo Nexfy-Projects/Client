@@ -1,5 +1,13 @@
 "use client";
-import { Box, Center, Heading, Text, Button, Input } from "@yamada-ui/react";
+import {
+  Box,
+  Center,
+  Heading,
+  Text,
+  Button,
+  Input,
+  Flex,
+} from "@yamada-ui/react";
 import { useRedirect } from "@/hooks/useLogin";
 import { useRouter } from "next/navigation";
 
@@ -9,8 +17,9 @@ export default function Home() {
 
   const handleRedirect = () => {
     if (!redirected) {
-      setRedirected(true);
+      document.cookie = "redirected=true; path=/"; // Cookieに保存
       router.push("/api/spotify/login");
+      setRedirected(true);
     }
   };
 
@@ -40,7 +49,13 @@ export default function Home() {
           </>
         ) : (
           <Center>
-            <Input type="text" placeholder="曲名・アーティスト名"></Input>
+            <Flex textAlign={"center"}>
+              <Input
+                type="text"
+                placeholder="曲名・アーティスト名"
+                width={"60%"}></Input>
+              <Button>検索</Button>
+            </Flex>
           </Center>
         )}
       </Box>
