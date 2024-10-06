@@ -29,8 +29,8 @@ export default function Home() {
     <>
       <Box>
         <Center>
-          <Heading as="h1" size="4xl" isTruncated>
-            Welcome
+          <Heading as="h1" size="4xl" marginBottom={"40px"} isTruncated>
+            Welcome to NexFy!!
           </Heading>
         </Center>
 
@@ -48,15 +48,16 @@ export default function Home() {
             </Center>
           </>
         ) : (
-          <Center>
-            <Flex textAlign={"center"}>
-              <Input
-                type="text"
-                placeholder="曲名・アーティスト名"
-                width={"60%"}></Input>
-              <Button>検索</Button>
-            </Flex>
-          </Center>
+          <>
+            <Center>
+              <Box mt={4} width={"60%"}>
+                <Flex justifyContent={"center"}>
+                  <Input type="text" placeholder="曲名・アーティスト名"></Input>
+                  <Button>検索</Button>
+                </Flex>
+              </Box>
+            </Center>
+          </>
         )}
       </Box>
     </>
