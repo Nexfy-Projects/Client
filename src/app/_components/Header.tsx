@@ -1,7 +1,13 @@
+"use client";
 // components/Header.tsx
-import { Flex, Avatar, Text, Link } from "@yamada-ui/react";
+import { Flex, Avatar, Text, Link, Button, Box } from "@yamada-ui/react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export const Header = () => {
+  const router = useRouter();
+  const [signined, setSignined] = useState(false);
+
   return (
     <Flex
       as="header"
@@ -50,7 +56,22 @@ export const Header = () => {
       </Flex> */}
 
       {/* プロフィール部分 */}
-      <Avatar name="ユーザー名" src="/path-to-profile-image.jpg" />
+      {signined ? (
+        <Avatar name="ユーザー名" src="/path-to-profile-image.jpg" />
+      ) : (
+        <>
+          <Box>
+            <Button
+              onClick={() => router.push("/pages/auth/signup")}
+              marginRight={5}>
+              新規登録
+            </Button>
+            <Button onClick={() => router.push("/pages/auth/signin")}>
+              ログイン
+            </Button>
+          </Box>
+        </>
+      )}
     </Flex>
   );
 };
