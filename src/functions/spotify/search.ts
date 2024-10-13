@@ -2,7 +2,7 @@
 
 import { NextApiRequest, NextApiResponse } from "next";
 
-export const GetSearch = async (req: NextApiRequest, res: NextApiResponse) => {
+export const getSearch = async (req: NextApiRequest, res: NextApiResponse) => {
   const token = req.cookies.access_token;
   const { q, type, offset, limit } = req.query;
 

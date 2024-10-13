@@ -24,7 +24,7 @@ export const Header = () => {
       zIndex="10">
       {/* ロゴ部分 */}
       <Text fontSize="xl" fontWeight="bold">
-        Nextfy
+        Nexfy
       </Text>
 
       {/* ナビゲーションバー */}

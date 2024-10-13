@@ -10,6 +10,7 @@ import {
 } from "@yamada-ui/react";
 import { useRedirect } from "@/hooks/useLogin";
 import { useRouter } from "next/navigation";
+import { getSearch } from "@/functions/spotify/search";
 
 export default function Home() {
   const { redirected, setRedirected } = useRedirect();
@@ -23,7 +24,7 @@ export default function Home() {
     }
   };
 
-  console.log(redirected);
+  // console.log(redirected);
 
   return (
     <>
