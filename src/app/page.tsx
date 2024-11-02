@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 
 export default function Home() {
   const { redirected, setRedirected } = useRedirect();
+
   const router = useRouter();
 
   const handleRedirect = () => {
@@ -22,8 +23,7 @@ export default function Home() {
       setRedirected(true);
     }
   };
-
-  console.log(redirected);
+  // console.log(redirected);
 
   return (
     <>
@@ -51,10 +51,20 @@ export default function Home() {
           <>
             <Center>
               <Box mt={4} width={"60%"}>
-                <Flex justifyContent={"center"}>
-                  <Input type="text" placeholder="曲名・アーティスト名"></Input>
-                  <Button>検索</Button>
-                </Flex>
+                <form id="searchForm">
+                  <Flex justifyContent={"center"}>
+                    <Input
+                      type="text"
+                      placeholder="曲名・アーティスト名"
+                    ></Input>
+                    <Button type="submit">検索</Button>
+                  </Flex>
+                </form>
+              </Box>
+              <Box mt={4}>
+                <ul>
+                  <li></li>
+                </ul>
               </Box>
             </Center>
           </>

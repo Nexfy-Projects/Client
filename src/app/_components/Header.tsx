@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 export const Header = () => {
   const router = useRouter();
-  const [signined, setSignined] = useState(false);
+  const signined = useState(false);
 
   return (
     <Flex
@@ -21,10 +21,11 @@ export const Header = () => {
       position="fixed"
       top="0"
       width="100%"
-      zIndex="10">
+      zIndex="10"
+    >
       {/* ロゴ部分 */}
       <Text fontSize="xl" fontWeight="bold">
-        Nextfy
+        Nexfy
       </Text>
 
       {/* ナビゲーションバー */}
@@ -37,33 +38,17 @@ export const Header = () => {
       </Flex>
 
       {/* 検索バー */}
-      {/* <Flex align='center'>
-        <Input
-          placeholder='曲やアーティストを検索'
-          variant='filled'
-          bg='gray.700'
-          border='none'
-          _placeholder={{ color: 'gray.400' }}
-        />
-        <IconButton
-          aria-label='Search'
-          icon={<Search />}
-          ml={2}
-          bg='gray.700'
-          color='white'
-          _hover={{ bg: 'gray.600' }}
-        />
-      </Flex> */}
 
       {/* プロフィール部分 */}
       {signined ? (
-        <Avatar name="ユーザー名" src="/path-to-profile-image.jpg" />
+        <Avatar name="user" src="/path-to-profile-image.jpg" />
       ) : (
         <>
           <Box>
             <Button
               onClick={() => router.push("/pages/auth/signup")}
-              marginRight={5}>
+              marginRight={5}
+            >
               新規登録
             </Button>
             <Button onClick={() => router.push("/pages/auth/signin")}>
