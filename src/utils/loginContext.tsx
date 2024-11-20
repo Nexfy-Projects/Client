@@ -9,7 +9,7 @@ interface RedirectContextType {
 }
 
 export const RedirectContext = createContext<RedirectContextType | undefined>(
-  {} as RedirectContextType
+  {} as RedirectContextType,
 );
 
 export const RedirectProvider = ({ children }: { children: ReactNode }) => {
@@ -22,7 +22,8 @@ export const RedirectProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <RedirectContext.Provider
-      value={{ redirected, setRedirected, toggleRedirected }}>
+      value={{ redirected, setRedirected, toggleRedirected }}
+    >
       {children}
     </RedirectContext.Provider>
   );

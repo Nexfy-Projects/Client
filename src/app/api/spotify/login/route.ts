@@ -11,15 +11,16 @@ export async function GET() {
   const scope = "user-read-private user-read-email"; // Spotifyの認証スコープ
 
   // Spotify認証URLにリダイレクト
-  const url =
-    "https://accounts.spotify.com/authorize?" +
-    querystring.stringify({
-      response_type: "code",
-      client_id: client_id,
-      scope: scope,
-      redirect_uri: redirect_uri,
-      state: state,
-    });
+  const url = "https://accounts.spotify.com/authorize?";
+  const body = {
+    response_type: "code",
+    client_id: client_id,
+    scope: scope,
+    redirect_uri: redirect_uri,
+    state: state,
+  };
 
-  return NextResponse.redirect(url); // サーバーからリダイレクト
+  const query = url + querystring.stringify(body);
+
+  return NextResponse.redirect(query); // サーバーからリダイレクト
 }
