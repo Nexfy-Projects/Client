@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { RedirectContext } from "../utils/context/loginContext";
+import { RedirectContext } from "../utils/loginContext";
 import cookie from "cookie";
 
 export const useRedirect = () => {
