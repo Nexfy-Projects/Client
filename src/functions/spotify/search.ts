@@ -1,5 +1,7 @@
 "use strict";
 
+import { type SearchResult } from "@/interfaces/interface";
+
 export async function performSearch(
   query: { q: string; type: string; offset: number; limit: number },
   token: string | null,
@@ -15,7 +17,7 @@ export async function performSearch(
     },
   );
 
-  const result = await response.json();
+  const result: SearchResult = await response.json();
 
   return result;
 }

@@ -16,7 +16,7 @@
     "@reduxjs/toolkit": "^2.3.0",
     "@supabase/supabase-js": "^2.46.1",
     "@yamada-ui/calendar": "^1.7.1",
-    "@yamada-ui/carousel": "^2.0.4",
+    "@yamada-ui/carousel": "^2.1.4",
     "@yamada-ui/charts": "^1.5.1",
     "@yamada-ui/react": "^1.5.1",
     "@yamada-ui/table": "^1.2.2",

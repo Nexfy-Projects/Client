@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.redirect(
       `${BASE_URL}/?error=${querystring.stringify({
         error: "state_mismatch",
-      })}`
+      })}`,
     );
   }
 
@@ -41,14 +41,14 @@ export async function GET(req: NextRequest) {
   try {
     const response = await fetch(
       "https://accounts.spotify.com/api/token",
-      authOptions
+      authOptions,
     );
 
     if (!response.ok) {
       const errorText = await response.text();
       console.error("Error response from Spotify API:", errorText);
       return NextResponse.redirect(
-        `${BASE_URL}/?error=${querystring.stringify({ error: "api_error" })}`
+        `${BASE_URL}/?error=${querystring.stringify({ error: "api_error" })}`,
       );
     }
 
@@ -58,7 +58,7 @@ export async function GET(req: NextRequest) {
       // エラーが発生した場合はエラーメッセージを返す
       console.error("Error in response data:", data.error);
       return NextResponse.redirect(
-        `${BASE_URL}/?error=${querystring.stringify({ error: data.error })}`
+        `${BASE_URL}/?error=${querystring.stringify({ error: data.error })}`,
       );
     } else {
       // トークンを取得し、次の処理を行う（例：トークンをセッションに保存）
@@ -75,7 +75,7 @@ export async function GET(req: NextRequest) {
           sameSite: "strict", // CSRF攻撃を防ぐ
           maxAge: 30 * 24 * 60 * 60,
           path: "/", // Cookieが適用されるパス
-        })
+        }),
       );
 
       response.headers.append(
@@ -86,7 +86,7 @@ export async function GET(req: NextRequest) {
           sameSite: "strict",
           maxAge: 30 * 24 * 60 * 60, // 30日後に期限切れ
           path: "/",
-        })
+        }),
       );
 
       return response;
@@ -96,7 +96,7 @@ export async function GET(req: NextRequest) {
 
     // リクエストが失敗した場合のエラーハンドリング
     return NextResponse.redirect(
-      `${BASE_URL}/?error=${querystring.stringify({ error: "invalid_token" })}`
+      `${BASE_URL}/?error=${querystring.stringify({ error: "invalid_token" })}`,
     );
   }
 }
