@@ -128,10 +128,27 @@ export default function Home() {
                       </a>
                     </Box>
                     <Box>
-                      <Text fontSize={"2xl"}>{item.name}</Text>
-                      <Text fontSize={"xl"}>{item.artists[0].name}</Text>
-                      <audio controls src={item.preview_url || ""}></audio>
+                      <Flex
+                        direction={"row"}
+                        justifyContent={"space-between"}
+                        margin={"10px 10px"}
+                      >
+                        <Box>
+                          <Text fontSize={"2xl"}>{item.name}</Text>
+                          <Text fontSize={"xl"}>{item.artists[0].name}</Text>
+                        </Box>
+                        <Box>
+                          <Text fontSize={"xl"}>
+                            {(item.duration_ms / 1000 / 60).toFixed(2)} min
+                          </Text>
+                          <Text fontSize={"xl"}>
+                            Popularity：{item.popularity}
+                          </Text>
+                        </Box>
+                      </Flex>
                     </Box>
+
+                    <audio controls src={item.preview_url || ""}></audio>
                   </Flex>
                 </CarouselSlide>
               ))}
