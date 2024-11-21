@@ -3,11 +3,12 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { Header } from "./_components/Header";
-import { Flex, Box, UIProvider } from "@yamada-ui/react";
+import { Box, UIProvider } from "@yamada-ui/react";
 // import { Sidebar } from "./_components/Sidebar";
 import { Footer } from "./_components/Footer";
 import { RedirectProvider } from "@/utils/loginContext";
 import { TokenProvider } from "@/utils/tokenProvider";
+import { ThemeProvider } from "@yamada-ui/react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -35,23 +36,25 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <TokenProvider>
-          <RedirectProvider>
-            <AppRouterCacheProvider>
-              <UIProvider>
-                <Header />
+        <ThemeProvider>
+          <TokenProvider>
+            <RedirectProvider>
+              <AppRouterCacheProvider>
+                <UIProvider>
+                  <Header />
 
-                <Flex height="100vh" bg="gray.900" color="white" pt="60px">
-                  {/* <Sidebar /> */}
-                  <Box as="main" flex="1" p={4}>
-                    {children}
+                  <Box height="100vh" bg="gray.900" color="white" pt="60px">
+                    {/* <Sidebar /> */}
+                    <Box as="main" p={4}>
+                      {children}
+                    </Box>
                   </Box>
-                </Flex>
-                <Footer />
-              </UIProvider>
-            </AppRouterCacheProvider>
-          </RedirectProvider>
-        </TokenProvider>
+                  <Footer />
+                </UIProvider>
+              </AppRouterCacheProvider>
+            </RedirectProvider>
+          </TokenProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
