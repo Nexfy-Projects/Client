@@ -1,7 +1,7 @@
-import cookie from "cookie";
+import { parse } from "cookie";
 
 export default async function GetAccessToken(req: Request) {
-  const cookies = cookie.parse(req.headers.get("cookie") || "");
+  const cookies = parse(req.headers.get("cookie") || "");
   const myCookie = cookies.access_token;
 
   if (!myCookie) {

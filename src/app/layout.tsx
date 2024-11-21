@@ -43,7 +43,12 @@ export default function RootLayout({
                 <UIProvider>
                   <Header />
 
-                  <Box height="100vh" bg="gray.900" color="white" pt="60px">
+                  <Box
+                    height="100vh"
+                    color="white"
+                    pt="60px"
+                    className="bg-black"
+                  >
                     {/* <Sidebar /> */}
                     <Box as="main" p={4}>
                       {children}
