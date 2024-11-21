@@ -1,21 +1,23 @@
 "use client";
+
+import React, { useState, useEffect } from "react";
+import { Carousel, CarouselSlide } from "@yamada-ui/carousel";
+import Image from "next/image";
+
 import {
   Box,
-  Center,
-  Heading,
-  Text,
+  Typography,
   Button,
-  Input,
-  Flex,
-} from "@yamada-ui/react";
-import { Carousel, CarouselSlide } from "@yamada-ui/carousel";
+  TextField,
+  Container,
+  Card,
+  CardContent,
+} from "@mui/material";
 import { useRedirect } from "@/hooks/useLogin";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
 import { useTokenContext } from "@/utils/context/tokenContext";
 import { performSearch } from "@/functions/spotify/search";
 import { type SearchResult, type TrackItem } from "@/interfaces/interface";
-import Image from "next/image";
 
 export default function Home() {
   const { redirected, setRedirected } = useRedirect();
@@ -24,14 +26,13 @@ export default function Home() {
   const [track, setTrack] = useState<SearchResult | undefined>(undefined);
 
   const router = useRouter();
-
   useEffect(() => {
     if (redirected) {
       const fetchAccessToken = async () => {
         try {
           const response = await fetch("/api/cookies", {
             method: "GET",
-            credentials: "include", // クッキーを送信するために設定
+            credentials: "include",
           });
 
           if (!response.ok) {
@@ -44,16 +45,13 @@ export default function Home() {
           console.error("Failed to fetch access token:", error);
         }
       };
-
       fetchAccessToken();
-
-      // console.log(accessToken);
     }
-  });
+  }, [redirected, setAccessToken]);
 
   const handleRedirect = async () => {
     if (!redirected) {
-      document.cookie = "redirected=true; path=/"; // Cookieに保存
+      document.cookie = "redirected=true; path=/";
       setRedirected(true);
       router.push("/api/spotify/login");
     }
@@ -74,88 +72,112 @@ export default function Home() {
   };
 
   return (
-    <>
-      <Center>
-        <Heading as="h1" size="4xl" marginTop={"40px"} marginBottom={"40px"}>
-          Welcome to NexFy!!
-        </Heading>
-      </Center>
+    <Container maxWidth="lg" sx={{ mt: 8, mb: 8 }}>
+      <Typography variant="h2" component="h1" align="center" gutterBottom>
+        Welcome to NexFy!!
+      </Typography>
 
       {!redirected ? (
-        <>
-          <Center>
-            <Box mt={4}>
-              <Text>Please click below to Start</Text>
-              <Button onClick={handleRedirect}>Start to Spotify System</Button>
-            </Box>
-          </Center>
-        </>
+        <Box textAlign="center" mt={4}>
+          <Typography variant="body1" gutterBottom>
+            Please click below to Start
+          </Typography>
+          <Button variant="contained" onClick={handleRedirect}>
+            Start to Spotify System
+          </Button>
+        </Box>
       ) : (
         <>
-          <Center>
-            <Box width={"50%"}>
-              <form onSubmit={handleSearch}>
-                <Flex justifyContent="center" direction={"row"}>
-                  <Input
-                    type="text"
-                    placeholder="曲名・アーティスト名"
-                    onChange={(e) => setSearch(e.target.value)}
-                    width={"40%"} // 入力フィールドの幅を調整
-                  />
-                  <Button type="submit">検索</Button>
-                </Flex>
-              </form>
-            </Box>
-          </Center>
-          <Center>
-            <Carousel slideSize={"10%"} autoplay delay={5000}>
-              {track?.tracks.items.map((item: TrackItem, index: number) => (
-                <CarouselSlide as={Center} bg={"primary"} key={index}>
-                  <Flex direction="column">
-                    <Box mt={"4xl"}>
-                      <a
-                        href={item.external_urls.spotify}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Image
-                          src={item.album.images[0].url}
-                          alt={item.name}
-                          width={512} // 適切な幅を指定
-                          height={512} // 適切な高さを指定
-                          style={{ objectFit: "cover" }} // 画像の表示方法を調整
-                        />
-                      </a>
-                    </Box>
-                    <Box>
-                      <Flex
-                        direction={"row"}
-                        justifyContent={"space-between"}
-                        margin={"10px 10px"}
-                      >
-                        <Box>
-                          <Text fontSize={"2xl"}>{item.name}</Text>
-                          <Text fontSize={"xl"}>{item.artists[0].name}</Text>
-                        </Box>
-                        <Box>
-                          <Text fontSize={"xl"}>
-                            {(item.duration_ms / 1000 / 60).toFixed(2)} min
-                          </Text>
-                          <Text fontSize={"xl"}>
-                            Popularity：{item.popularity}
-                          </Text>
-                        </Box>
-                      </Flex>
-                    </Box>
+          <Box mt={4} textAlign="center">
+            <form onSubmit={handleSearch}>
+              <TextField
+                label="曲名・アーティスト名"
+                variant="outlined"
+                fullWidth
+                onChange={(e) => setSearch(e.target.value)}
+                sx={{
+                  color: "white",
+                  mb: 2,
+                  "& .MuiOutlinedInput-root": {
+                    "& fieldset": {
+                      borderColor: "white", // アウトラインの色を白に
+                    },
+                    "&:hover fieldset": {
+                      borderColor: "white", // ホバー時のアウトラインの色を白に
+                    },
+                    "& input": {
+                      color: "white", // 入力された文字の色を白に
+                    },
+                    "&.Mui-focused fieldset": {
+                      borderColor: "white", // フォーカス時のアウトラインの色を白に
+                    },
+                  },
+                  "& .MuiInputLabel-root": {
+                    color: "white", // ラベルの色を白に
+                  },
+                  "& .MuiInputLabel-root.Mui-focused": {
+                    color: "white", // フォーカス時のラベルの色を白に
+                  },
+                }}
+              />
+              <Button type="submit" variant="contained">
+                検索
+              </Button>
+            </form>
+          </Box>
 
-                    <audio controls src={item.preview_url || ""}></audio>
-                  </Flex>
-                </CarouselSlide>
-              ))}
-            </Carousel>
-          </Center>
+          <Carousel
+            slideSize="70%" // スライドサイズを調整
+            // align="start" // スライドの配置を調整
+            mt={4}
+            mb={4}
+            autoplay
+            delay={5000}
+            sx={{ height: "auto" }}
+          >
+            {track?.tracks?.items.map((item: TrackItem, index: number) => (
+              <CarouselSlide key={index} as={Box} style={{ padding: "10px" }}>
+                <Card style={{ height: "auto", marginBottom: "40px" }}>
+                  <a href={item.album.uri}>
+                    <Box>
+                      <Image
+                        src={item.album.images[0].url}
+                        alt={item.name}
+                        width={150}
+                        height={150}
+                        style={{
+                          objectFit: "cover",
+                          width: "100%",
+                          height: "auto",
+                        }}
+                      />
+                    </Box>
+                  </a>
+                  <CardContent>
+                    <Typography variant="h6" component="div">
+                      {item.name}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {item.artists[0].name}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {(item.duration_ms / 1000 / 60).toFixed(2)} min
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Popularity: {item.popularity}
+                    </Typography>
+                  </CardContent>
+                  <audio
+                    controls
+                    src={item.preview_url || ""}
+                    style={{ width: "100%" }}
+                  />
+                </Card>
+              </CarouselSlide>
+            ))}
+          </Carousel>
         </>
       )}
-    </>
+    </Container>
   );
 }

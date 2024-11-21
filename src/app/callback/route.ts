@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import querystring from "querystring";
-import cookie from "cookie";
+import { serialize } from "cookie";
 
 const client_id = process.env.SPOTIFY_CLIENT_ID as string;
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET as string;
@@ -69,7 +69,7 @@ export async function GET(req: NextRequest) {
 
       response.headers.append(
         "Set-Cookie",
-        cookie.serialize("access_token", access_token, {
+        serialize("access_token", access_token, {
           httpOnly: true, // クライアントサイドでJavaScriptからアクセスできないようにする
           secure: process.env.NODE_ENV === "production", // プロダクション環境でのみHTTPSを使用
           sameSite: "strict", // CSRF攻撃を防ぐ
@@ -80,7 +80,7 @@ export async function GET(req: NextRequest) {
 
       response.headers.append(
         "Set-Cookie",
-        cookie.serialize("refresh_token", refresh_token, {
+        serialize("refresh_token", refresh_token, {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
           sameSite: "strict",

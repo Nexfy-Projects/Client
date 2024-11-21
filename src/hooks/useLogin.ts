@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { RedirectContext } from "../utils/loginContext";
-import cookie from "cookie";
+import { parse } from "cookie";
 
 export const useRedirect = () => {
   const context = useContext(RedirectContext);
@@ -10,7 +10,7 @@ export const useRedirect = () => {
 
   // Cookieから状態を取得
   useEffect(() => {
-    const cookies = cookie.parse(document.cookie);
+    const cookies = parse(document.cookie);
     if (cookies.redirected === "true") {
       context.setRedirected(true);
     }

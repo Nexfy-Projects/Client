@@ -1,62 +1,120 @@
 "use client";
-// components/Header.tsx
-import { Flex, Avatar, Text, Link, Button, Box } from "@yamada-ui/react";
-import { useState } from "react";
+
+import React, { useState } from "react";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Button,
+  Box,
+  Avatar,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 import { useRouter } from "next/navigation";
 
 export const Header = () => {
   const router = useRouter();
-  const signined = useState(false);
+  const [signined] = useState(false);
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
+
+  const toggleDrawer =
+    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        "key" in event && // ここでeventがKeyboardEventであることを確認
+        event.type === "keydown" &&
+        (event.key === "Tab" || event.key === "Shift")
+      ) {
+        return;
+      }
+      setDrawerOpen(open);
+    };
+
+  const drawerContent = (
+    <Box
+      sx={{ width: 250 }}
+      role="presentation"
+      onClick={toggleDrawer(false)}
+      onKeyDown={toggleDrawer(false)}
+    >
+      <List>
+        <ListItem component="a" onClick={() => router.push("/")}>
+          <ListItemText primary="ホーム" />
+        </ListItem>
+        <ListItem component="a">
+          <ListItemText primary="検索" />
+        </ListItem>
+        <ListItem component="a">
+          <ListItemText primary="あなたのライブラリ" />
+        </ListItem>
+        {!signined && (
+          <>
+            <ListItem
+              component="a"
+              onClick={() => router.push("/pages/auth/signup")}
+            >
+              <ListItemText primary="新規登録" />
+            </ListItem>
+            <ListItem
+              component="a"
+              onClick={() => router.push("/pages/auth/signin")}
+            >
+              <ListItemText primary="ログイン" />
+            </ListItem>
+          </>
+        )}
+      </List>
+    </Box>
+  );
 
   return (
-    <Flex
-      as="header"
-      bg="gray.800"
-      color="white"
-      align="center"
-      justify="space-between"
-      px={6}
-      py={4}
-      boxShadow="md"
-      position="fixed"
-      top="0"
-      width="100%"
-      zIndex="10"
-    >
-      {/* ロゴ部分 */}
-      <Text fontSize="xl" fontWeight="bold">
-        Nexfy
-      </Text>
+    <AppBar position="fixed" sx={{ backgroundColor: "green" }}>
+      <Toolbar>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          Nexfy
+        </Typography>
 
-      {/* ナビゲーションバー */}
-      <Flex align="center" gap={30}>
-        <Link href="/" color={"white"}>
-          ホーム
-        </Link>
-        <Text>検索</Text>
-        <Text>あなたのライブラリ</Text>
-      </Flex>
+        <Box sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}>
+          <Button color="inherit" onClick={() => router.push("/")}>
+            ホーム
+          </Button>
+          <Button color="inherit">検索</Button>
+          <Button color="inherit">あなたのライブラリ</Button>
 
-      {/* 検索バー */}
+          {signined ? (
+            <Avatar alt="user" src="/path-to-profile-image.jpg" />
+          ) : (
+            <>
+              <Button
+                color="inherit"
+                onClick={() => router.push("/pages/auth/signup")}
+              >
+                新規登録
+              </Button>
+              <Button
+                color="inherit"
+                onClick={() => router.push("/pages/auth/signin")}
+              >
+                ログイン
+              </Button>
+            </>
+          )}
+        </Box>
 
-      {/* プロフィール部分 */}
-      {signined ? (
-        <Avatar name="user" src="/path-to-profile-image.jpg" />
-      ) : (
-        <>
-          <Box>
-            <Button
-              onClick={() => router.push("/pages/auth/signup")}
-              marginRight={5}
-            >
-              新規登録
-            </Button>
-            <Button onClick={() => router.push("/pages/auth/signin")}>
-              ログイン
-            </Button>
-          </Box>
-        </>
-      )}
-    </Flex>
+        <Box sx={{ display: { xs: "flex", md: "none" } }}>
+          <IconButton color="inherit" edge="start" onClick={toggleDrawer(true)}>
+            <MenuIcon />
+          </IconButton>
+        </Box>
+      </Toolbar>
+
+      <Drawer anchor="right" open={isDrawerOpen} onClose={toggleDrawer(false)}>
+        {drawerContent}
+      </Drawer>
+    </AppBar>
   );
 };
