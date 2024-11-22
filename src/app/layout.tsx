@@ -34,7 +34,8 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white`}
+        color="white"
       >
         <ThemeProvider>
           <TokenProvider>
@@ -43,16 +44,9 @@ export default function RootLayout({
                 <UIProvider>
                   <Header />
 
-                  <Box
-                    height="100vh"
-                    color="white"
-                    pt="60px"
-                    className="bg-black"
-                  >
-                    {/* <Sidebar /> */}
-                    <Box as="main" p={4}>
-                      {children}
-                    </Box>
+                  {/* <Sidebar /> */}
+                  <Box as="main" p={4}>
+                    {children}
                   </Box>
                   <Footer />
                 </UIProvider>
