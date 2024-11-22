@@ -12,10 +12,10 @@ export const useTokenContext = () => {
 export const useSetToken = () => {
   const { accessToken, setAccessToken, refreshToken, setRefreshToken } =
     useTokenContext();
-  const AccessToken = (token: string | null) => {
+  const AccessToken = (token: string | "") => {
     setAccessToken(token);
   };
-  const RefreshToken = (token: string | null) => {
+  const RefreshToken = (token: string | "") => {
     setRefreshToken(token);
   };
   return {
