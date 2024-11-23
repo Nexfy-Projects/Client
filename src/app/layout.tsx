@@ -5,10 +5,9 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { Header } from "./_components/Header";
 import { Box, UIProvider } from "@yamada-ui/react";
 // import { Sidebar } from "./_components/Sidebar";
-import { Footer } from "./_components/Footer";
+// import { Footer } from "./_components/Footer";
 import { RedirectProvider } from "@/utils/loginContext";
 import { TokenProvider } from "@/utils/tokenProvider";
-import { ThemeProvider } from "@yamada-ui/react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -37,23 +36,20 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white`}
         color="white"
       >
-        <ThemeProvider>
-          <TokenProvider>
-            <RedirectProvider>
-              <AppRouterCacheProvider>
-                <UIProvider>
-                  <Header />
-
-                  {/* <Sidebar /> */}
-                  <Box as="main" p={4}>
-                    {children}
-                  </Box>
-                  <Footer />
-                </UIProvider>
-              </AppRouterCacheProvider>
-            </RedirectProvider>
-          </TokenProvider>
-        </ThemeProvider>
+        <TokenProvider>
+          <RedirectProvider>
+            <AppRouterCacheProvider>
+              <UIProvider>
+                <Header />
+                {/* <Sidebar /> */}
+                <Box as="main" p={4}>
+                  {children}
+                </Box>
+                {/* <Footer /> */}
+              </UIProvider>
+            </AppRouterCacheProvider>
+          </RedirectProvider>
+        </TokenProvider>
       </body>
     </html>
   );

@@ -73,7 +73,7 @@ export async function GET(req: NextRequest) {
           httpOnly: true, // クライアントサイドでJavaScriptからアクセスできないようにする
           secure: process.env.NODE_ENV === "production", // プロダクション環境でのみHTTPSを使用
           sameSite: "strict", // CSRF攻撃を防ぐ
-          maxAge: 30 * 24 * 60 * 60,
+          maxAge: 60 * 60,
           path: "/", // Cookieが適用されるパス
         }),
       );
@@ -84,7 +84,7 @@ export async function GET(req: NextRequest) {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
           sameSite: "strict",
-          maxAge: 30 * 24 * 60 * 60, // 30日後に期限切れ
+          maxAge: 60 * 60,
           path: "/",
         }),
       );

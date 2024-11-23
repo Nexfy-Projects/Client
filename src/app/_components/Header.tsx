@@ -63,7 +63,7 @@ export const Header = () => {
               component="a"
               onClick={() => router.push("/pages/auth/signin")}
             >
-              <ListItemText primary="ログイン" />
+              <ListItemText primary="サインイン" />
             </ListItem>
           </>
         )}
