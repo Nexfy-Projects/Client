@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 export const Header = () => {
   const router = useRouter();
@@ -59,10 +60,7 @@ export const Header = () => {
             >
               <ListItemText primary="新規登録" />
             </ListItem>
-            <ListItem
-              component="a"
-              onClick={() => router.push("/pages/auth/signin")}
-            >
+            <ListItem component="a" onClick={() => signIn()}>
               <ListItemText primary="サインイン" />
             </ListItem>
           </>
@@ -95,10 +93,7 @@ export const Header = () => {
               >
                 新規登録
               </Button>
-              <Button
-                color="inherit"
-                onClick={() => router.push("/pages/auth/signin")}
-              >
+              <Button color="inherit" onClick={() => signIn()}>
                 ログイン
               </Button>
             </>

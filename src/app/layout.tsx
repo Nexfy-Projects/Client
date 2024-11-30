@@ -8,6 +8,8 @@ import { Box, UIProvider } from "@yamada-ui/react";
 // import { Footer } from "./_components/Footer";
 import { RedirectProvider } from "@/utils/loginContext";
 import { TokenProvider } from "@/utils/tokenProvider";
+// import { SessionProvider } from "next-auth/react";
+// import type { Session } from "next-auth";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,15 +29,18 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+  // pageProps,
+}: {
   children: React.ReactNode;
-}>) {
+  // pageProps: { session: Session | null } | undefined;
+}) {
   return (
     <html lang="ja">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white`}
         color="white"
       >
+        {/* <SessionProvider session={pageProps?.session}> */}
         <TokenProvider>
           <RedirectProvider>
             <AppRouterCacheProvider>
@@ -50,6 +55,7 @@ export default function RootLayout({
             </AppRouterCacheProvider>
           </RedirectProvider>
         </TokenProvider>
+        {/* </SessionProvider> */}
       </body>
     </html>
   );
