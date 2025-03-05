@@ -47,7 +47,7 @@ export default function Home() {
   }, [redirected, setAccessToken]);
 
   const handleRedirect = async () => {
-    if (!redirected) {
+    if (!redirected && !accessToken) {
       document.cookie =
         "redirected=true; path=/; max-age=60 * 60; samesite=strict; ";
       setRedirected(true);

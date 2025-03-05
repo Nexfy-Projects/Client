@@ -6,7 +6,7 @@ const client_id = process.env.SPOTIFY_CLIENT_ID as string;
 const client_secret = process.env.SPOTIFY_CLIENT_SECRET as string;
 const redirect_uri = process.env.SPOTIFY_REDIRECT_URI as string;
 
-const BASE_URL = "http://localhost:3000"; // ここを適切なベース URL に設定
+const BASE_URL = "https://nexfy.net"; // ここを適切なベース URL に設定
 
 export async function GET(req: NextRequest) {
   const url = req.nextUrl;
@@ -73,7 +73,7 @@ export async function GET(req: NextRequest) {
           httpOnly: true, // クライアントサイドでJavaScriptからアクセスできないようにする
           secure: process.env.NODE_ENV === "production", // プロダクション環境でのみHTTPSを使用
           sameSite: "strict", // CSRF攻撃を防ぐ
-          maxAge: 60 * 60,
+          maxAge: 30 * 24 * 60 * 60,
           path: "/", // Cookieが適用されるパス
         }),
       );
@@ -84,7 +84,7 @@ export async function GET(req: NextRequest) {
           httpOnly: true,
           secure: process.env.NODE_ENV === "production",
           sameSite: "strict",
-          maxAge: 60 * 60,
+          maxAge: 30 * 24 * 60 * 60, // 30日後に期限切れ
           path: "/",
         }),
       );

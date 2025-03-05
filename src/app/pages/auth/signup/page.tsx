@@ -28,6 +28,8 @@ const schema = yup
 
 type FormData = yup.InferType<typeof schema>;
 
+export const dynamic = "force-dynamic";
+
 export default function Signup() {
   const router = useRouter();
   const {
@@ -37,13 +39,18 @@ export default function Signup() {
     watch,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
-    defaultValues: JSON.parse(localStorage.getItem("signupForm") || "{}"),
+    defaultValues:
+      typeof window !== "undefined"
+        ? JSON.parse(localStorage.getItem("signupForm") || "{}")
+        : {},
   });
 
   const watchAllFields = watch();
 
   useEffect(() => {
-    localStorage.setItem("signupForm", JSON.stringify(watchAllFields));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("signupForm", JSON.stringify(watchAllFields));
+    }
   }, [watchAllFields]);
 
   const onSubmit = (data: FormData) => {
