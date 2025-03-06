@@ -14,7 +14,13 @@
 
 // export default NextAuth(authOptions);
 
-import { integer, pgTable, varchar } from "drizzle-orm/pg-core";
+import {
+  integer,
+  pgTable,
+  varchar,
+  timestamp,
+  boolean,
+} from "drizzle-orm/pg-core";
 
 export const usersTable = pgTable("users", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -25,16 +31,18 @@ export const usersTable = pgTable("users", {
 
 export const playlistsTable = pgTable("playlists", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  name: varchar({ length: 255 }).notNull(),
   userId: integer()
     .notNull()
     .references(() => usersTable.id),
+  playListId: varchar({ length: 255 }).notNull(),
+  playListName: varchar({ length: 255 }).notNull(),
+  playListDescription: varchar({ length: 255 }),
   songId: varchar({ length: 255 }).notNull(),
-  songName: varchar({ length: 255 }).notNull(),
+  songName: varchar({ length: 255 }),
   songAlbum: varchar({ length: 255 }),
-  songArtist: varchar({ length: 255 }).notNull(),
+  songArtist: varchar({ length: 255 }),
   songKinds: varchar({ length: 255 }),
-  liked: integer().default(0),
-  createdAt: varchar({ length: 255 }).notNull(),
-  updatedAt: varchar({ length: 255 }).notNull(),
+  liked: boolean().default(false),
+  updatedAt: timestamp().defaultNow().notNull(),
+  createdAt: timestamp().defaultNow().notNull(),
 });

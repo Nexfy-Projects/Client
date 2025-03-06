@@ -1,5 +1,5 @@
 {
-  "id": "a3791dbd-98b6-4942-9a7a-1f900dadaa37",
+  "id": "9ed0879e-a5ff-401b-8462-585e33d0967f",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -25,17 +25,29 @@
             "cycle": false
           }
         },
-        "name": {
-          "name": "name",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true
-        },
         "userId": {
           "name": "userId",
           "type": "integer",
           "primaryKey": false,
           "notNull": true
+        },
+        "playListId": {
+          "name": "playListId",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "playListName": {
+          "name": "playListName",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "playListDescription": {
+          "name": "playListDescription",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
         },
         "songId": {
           "name": "songId",
@@ -47,7 +59,7 @@
           "name": "songName",
           "type": "varchar(255)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "songAlbum": {
           "name": "songAlbum",
@@ -59,7 +71,7 @@
           "name": "songArtist",
           "type": "varchar(255)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "songKinds": {
           "name": "songKinds",
@@ -69,22 +81,24 @@
         },
         "liked": {
           "name": "liked",
-          "type": "integer",
+          "type": "boolean",
           "primaryKey": false,
           "notNull": false,
-          "default": 0
-        },
-        "createdAt": {
-          "name": "createdAt",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true
+          "default": false
         },
         "updatedAt": {
           "name": "updatedAt",
-          "type": "varchar(255)",
+          "type": "timestamp",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "default": "now()"
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
       "indexes": {},

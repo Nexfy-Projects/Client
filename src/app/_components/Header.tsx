@@ -84,7 +84,12 @@ export const Header = () => {
             ホーム
           </Button>
           <Button color="inherit">検索</Button>
-          <Button color="inherit">あなたのライブラリ</Button>
+          <Button
+            color="inherit"
+            onClick={() => router.push("/pages/library/[...id]")}
+          >
+            あなたのライブラリ
+          </Button>
 
           {signined ? (
             <Avatar alt="user" src="/path-to-profile-image.jpg" />

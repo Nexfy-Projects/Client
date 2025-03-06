@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import querystring from "querystring";
-import { generateRandomString } from "../../../../utils/generateRandomString";
+import { generateRandomString } from "../../../../functions/generateRandomString";
 
 // 環境変数からクライアントIDとリダイレクトURIを取得
 const client_id = process.env.SPOTIFY_CLIENT_ID as string;
