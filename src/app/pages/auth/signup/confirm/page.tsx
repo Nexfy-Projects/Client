@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import {
   Container,
   Typography,
@@ -11,10 +11,13 @@ import {
   ListItem,
   ListItemText,
 } from "@mui/material";
+import supabase from "@/app/api/supabase/init";
+import { revalidatePath } from "next/cache";
 
 type FormData = {
   fullName: string;
   email: string;
+  password: string;
   phoneNumber?: string;
   address?: string;
 };
@@ -31,14 +34,26 @@ export default function SignupConfirm() {
   }, []);
 
   const handleBack = () => {
-    router.push("../");
+    router.push("../signup");
   };
 
-  const handleSubmit = () => {
-    // Here you would typically send the data to your backend
-    // For now, we'll just simulate a successful registration
-    localStorage.removeItem("signupForm"); // Clear the saved form data
-    router.push("./confirm/complete");
+  const handleSubmit = async () => {
+    const data = {
+      email: formData?.email as string,
+      password: formData?.password as string,
+    };
+    const { error } = await supabase.auth.signUp({
+      email: data.email,
+      password: data.password,
+    });
+    if (error) {
+      console.error("Error signing up:", error.message);
+      return;
+    }
+    localStorage.setItem("si", JSON.stringify(formData));
+    localStorage.removeItem("signupForm");
+    revalidatePath("/auth/signup/confirm");
+    redirect("/auth/signup/confirm/complete");
   };
 
   if (!formData) {
@@ -57,6 +72,9 @@ export default function SignupConfirm() {
         <ListItem>
           <ListItemText primary="メールアドレス" secondary={formData.email} />
         </ListItem>
+        <ListItem hidden>
+          <ListItemText primary="パスワード" secondary={formData.password} />
+        </ListItem>
         {formData.phoneNumber && (
           <ListItem>
             <ListItemText primary="電話番号" secondary={formData.phoneNumber} />
@@ -70,6 +88,7 @@ export default function SignupConfirm() {
       </List>
       <Box sx={{ display: "flex", justifyContent: "space-between", mt: 3 }}>
         <Button
+          type="button"
           onClick={handleBack}
           variant="outlined"
           sx={{ color: "white", borderColor: "white" }}

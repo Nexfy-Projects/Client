@@ -6,6 +6,7 @@ import { TrackItem, AudioAnalysis } from "@/interfaces/spotifyInterface";
 import { pitchToNote } from "@/functions/spotify/pitchToNote";
 import { popularity } from "@/functions/spotify/popularity";
 import { useState, useEffect } from "react";
+
 interface TrackCardProps {
   item: TrackItem;
   data: AudioAnalysis;
@@ -21,6 +22,7 @@ export const TrackCard: React.FC<TrackCardProps> = ({ item, data }) => {
         setMinWidth(268); // 幅が600px未満の場合は300pxに設定
         setMaxWidth(268); // 幅が600px未満の場合は300pxに設定
       } else {
+        setMinWidth(300); // それ以外は300pxに設定
         setMaxWidth(425); // それ以外は400pxに設定
       }
     };

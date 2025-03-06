@@ -47,7 +47,7 @@ export default function Home() {
   }, [redirected, setAccessToken]);
 
   const handleRedirect = async () => {
-    if (!redirected) {
+    if (!redirected && !accessToken) {
       document.cookie =
         "redirected=true; path=/; max-age=60 * 60; samesite=strict; ";
       setRedirected(true);
@@ -61,7 +61,9 @@ export default function Home() {
 
     const datas: AudioAnalysis[] = await Promise.all(
       res.tracks.items.map(async (item: TrackItem) => {
-        return await trackDetails(item.id, accessToken);
+        const detail = trackDetails(item.id, accessToken);
+        const res = await detail;
+        return res;
       }),
     );
     setData(datas);

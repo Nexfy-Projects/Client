@@ -16,6 +16,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useRouter } from "next/navigation";
+// import { signIn } from 'next-auth/react';
 
 export const Header = () => {
   const router = useRouter();

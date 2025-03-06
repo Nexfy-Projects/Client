@@ -38,16 +38,22 @@ export const trackDetails = async (
   id: string | null,
   token: string | null,
 ): Promise<AudioAnalysis> => {
+  if (!id || !token) {
+    throw new Error("IDまたはトークンが無効です");
+  }
+
   const res = await fetch(`https://api.spotify.com/v1/audio-analysis/${id}`, {
-    method: "GET",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   });
+
   if (!res.ok) {
-    throw new Error("Failed to fetch track details");
+    const errorMessage = await res.text();
+    throw new Error(`Failed to fetch track details: ${errorMessage}`);
   }
+
   const result: AudioAnalysis = await res.json();
   return result;
 };
