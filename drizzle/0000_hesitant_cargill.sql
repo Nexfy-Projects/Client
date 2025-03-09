@@ -1,19 +1,19 @@
 CREATE TABLE IF NOT EXISTS "playlists" (
-	"id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "playlists_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START WITH 1 CACHE 1),
+	"id" uuid PRIMARY KEY DEFAULT 'gen_random_uuid()' NOT NULL,
 	"name" varchar(255) NOT NULL,
-	"userId" integer NOT NULL,
+	"userId" uuid NOT NULL,
 	"songId" varchar(255) NOT NULL,
 	"songName" varchar(255) NOT NULL,
 	"songAlbum" varchar(255),
 	"songArtist" varchar(255) NOT NULL,
 	"songKinds" varchar(255),
-	"liked" integer DEFAULT 0,
-	"createdAt" varchar(255) NOT NULL,
-	"updatedAt" varchar(255) NOT NULL
+	"liked" boolean DEFAULT false,
+	"createdAt" date DEFAULT now() NOT NULL,
+	"updatedAt" date DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "users" (
-	"id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "users_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START WITH 1 CACHE 1),
+	"id" uuid PRIMARY KEY DEFAULT 'gen_random_uuid()' NOT NULL,
 	"name" varchar(255) NOT NULL,
 	"age" integer NOT NULL,
 	"email" varchar(255) NOT NULL,
