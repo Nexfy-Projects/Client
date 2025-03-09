@@ -8,7 +8,6 @@ import {
   IconButton,
   Button,
   Box,
-  Avatar,
   Drawer,
   List,
   ListItem,
@@ -16,11 +15,27 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useRouter } from "next/navigation";
-// import { signIn } from 'next-auth/react';
+import supabase from "../api/supabase/init";
+import { useSetToken } from "@/utils/context/tokenContext";
+
+export async function signOut() {
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    console.error("ログアウトエラー:", error);
+    return;
+  }
+  await fetch("/api/cookies", {
+    method: "DELETE",
+    credentials: "include",
+  });
+
+  window.location.href = "/";
+}
 
 export const Header = () => {
   const router = useRouter();
-  const [signined] = useState(false);
+  const { accessToken } = useSetToken();
   const [isDrawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer =
@@ -49,23 +64,16 @@ export const Header = () => {
         <ListItem component="a">
           <ListItemText primary="検索" />
         </ListItem>
-        <ListItem component="a">
-          <ListItemText primary="あなたのライブラリ" />
-        </ListItem>
-        {!signined && (
+
+        {accessToken && (
           <>
-            <ListItem
-              component="a"
-              onClick={() => router.push("/pages/auth/signup")}
-            >
-              <ListItemText primary="新規登録" />
+            <ListItem component="a">
+              <ListItemText primary="あなたのライブラリ" />
             </ListItem>
-            <ListItem
-              component="a"
-              onClick={() => router.push("/pages/auth/signin")}
-            >
-              <ListItemText primary="サインイン" />
+            <ListItem component="a">
+              <ListItemText primary="プロフィール" />
             </ListItem>
+            <Button onClick={signOut}>ログアウト</Button>
           </>
         )}
       </List>
@@ -84,23 +92,15 @@ export const Header = () => {
             ホーム
           </Button>
           <Button color="inherit">検索</Button>
-          <Button color="inherit">あなたのライブラリ</Button>
 
-          {signined ? (
-            <Avatar alt="user" src="/path-to-profile-image.jpg" />
-          ) : (
+          {accessToken && (
             <>
-              <Button
-                color="inherit"
-                onClick={() => router.push("/pages/auth/signup")}
-              >
-                新規登録
-              </Button>
-              <Button
-                color="inherit"
-                onClick={() => router.push("/pages/auth/signin")}
-              >
-                ログイン
+              <Button color="inherit">あなたのライブラリ</Button>
+
+              <Button color="inherit">プロフィール</Button>
+
+              <Button color="inherit" onClick={signOut}>
+                ログアウト
               </Button>
             </>
           )}

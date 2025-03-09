@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from "react";
 import { Carousel, CarouselSlide } from "@yamada-ui/carousel";
 import { Box, Typography, Button, Container } from "@mui/material";
-import { useRedirect } from "@/utils/context/spotifyLoginContext";
+// import { useRedirect } from '@/utils/context/spotifyLoginContext';
 import { useRouter } from "next/navigation";
-import { useTokenContext } from "@/utils/context/tokenContext";
+import { useSetToken } from "@/utils/context/tokenContext";
 import { performSearch, trackDetails } from "@/app/api/spotify/search/search";
 import {
   type SearchResult,
@@ -16,41 +16,37 @@ import { SearchForm } from "./components/SearchForm";
 import { TrackCard } from "./components/TrackCard";
 
 export default function Home() {
-  const { redirected, setRedirected } = useRedirect();
-  const { accessToken, setAccessToken } = useTokenContext();
+  // const { redirected, setRedirected } = useRedirect();
+  const { accessToken, AccessToken } = useSetToken();
   const [track, setTrack] = useState<SearchResult | undefined>(undefined);
   const [data, setData] = useState<AudioAnalysis[]>([]);
 
   const router = useRouter();
 
   useEffect(() => {
-    if (redirected) {
-      const fetchAccessToken = async () => {
-        try {
-          const response = await fetch("/api/cookies", {
-            method: "GET",
-            credentials: "include",
-          });
+    const fetchAccessToken = async () => {
+      try {
+        const response = await fetch("/api/cookies", {
+          method: "GET",
+          credentials: "include",
+        });
 
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-
-          const data = await response.json();
-          setAccessToken(data.access_token);
-        } catch (error) {
-          console.error("Failed to fetch access token:", error);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
         }
-      };
-      fetchAccessToken();
-    }
-  }, [redirected, setAccessToken]);
+
+        const data = await response.json();
+
+        AccessToken(data.access_token);
+      } catch (error) {
+        console.error("Failed to fetch access token:", error);
+      }
+    };
+    fetchAccessToken();
+  }, [AccessToken]);
 
   const handleRedirect = async () => {
-    if (!redirected && !accessToken) {
-      document.cookie =
-        "redirected=true; path=/; max-age=60 * 60; samesite=strict; ";
-      setRedirected(true);
+    if (!accessToken) {
       router.push("/api/spotify/login");
     }
   };
@@ -75,7 +71,7 @@ export default function Home() {
         Welcome to Nexfy!!
       </Typography>
 
-      {!redirected ? (
+      {!accessToken ? (
         <Box textAlign="center" mt={4}>
           <Typography variant="body1" gutterBottom>
             Please click below to Start
