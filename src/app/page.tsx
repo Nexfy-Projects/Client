@@ -36,9 +36,8 @@ export default function Home() {
         }
 
         const data = await response.json();
-        console.log("data:", data.access_token);
+
         AccessToken(data.access_token);
-        console.log("accessToken:", accessToken);
       } catch (error) {
         console.error("Failed to fetch access token:", error);
       }
