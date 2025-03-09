@@ -6,7 +6,6 @@ import { Header } from "./_components/Header";
 import { Box, UIProvider } from "@yamada-ui/react";
 // import { Sidebar } from "./_components/Sidebar";
 // import { Footer } from "./_components/Footer";
-import { RedirectProvider } from "@/utils/loginContext";
 import { TokenProvider } from "@/utils/tokenProvider";
 // import { SessionProvider } from "next-auth/react";
 // import type { Session } from "next-auth";
@@ -42,18 +41,16 @@ export default function RootLayout({
       >
         {/* <SessionProvider session={pageProps?.session}> */}
         <TokenProvider>
-          <RedirectProvider>
-            <AppRouterCacheProvider>
-              <UIProvider>
-                <Header />
-                {/* <Sidebar /> */}
-                <Box as="main" p={4}>
-                  {children}
-                </Box>
-                {/* <Footer /> */}
-              </UIProvider>
-            </AppRouterCacheProvider>
-          </RedirectProvider>
+          <AppRouterCacheProvider>
+            <UIProvider>
+              <Header />
+              {/* <Sidebar /> */}
+              <Box as="main" p={4}>
+                {children}
+              </Box>
+              {/* <Footer /> */}
+            </UIProvider>
+          </AppRouterCacheProvider>
         </TokenProvider>
         {/* </SessionProvider> */}
       </body>

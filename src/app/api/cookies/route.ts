@@ -1,5 +1,12 @@
-import GetAccessToken from "@/functions/cookie/getAccessTokenCookie";
+import {
+  getAccessToken,
+  removeToken,
+} from "@/functions/cookie/tokenCookiesFunction";
 
 export async function GET(req: Request) {
-  return await GetAccessToken(req);
+  return await getAccessToken(req);
+}
+
+export async function DELETE(req: Request) {
+  return await removeToken(req);
 }
