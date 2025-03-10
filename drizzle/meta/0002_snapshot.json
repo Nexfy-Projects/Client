@@ -86,12 +86,8 @@
           "tableFrom": "playlists",
           "tableTo": "users",
           "schemaTo": "auth",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "uid"
-          ],
+          "columnsFrom": ["userId"],
+          "columnsTo": ["uid"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }

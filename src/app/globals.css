@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'CustomFont';
-  src: url('/_next/static/media/4473ecc91f70f139-s.p.woff') format('woff');
+  font-family: "CustomFont";
+  src: url("/_next/static/media/4473ecc91f70f139-s.p.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
