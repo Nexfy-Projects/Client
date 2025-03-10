@@ -14,7 +14,14 @@
 
 // export default NextAuth(authOptions);
 
-import { integer, pgTable, varchar } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  integer,
+  pgTable,
+  timestamp,
+  varchar,
+} from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
 
 export const usersTable = pgTable("users", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -23,18 +30,18 @@ export const usersTable = pgTable("users", {
   email: varchar({ length: 255 }).notNull().unique(),
 });
 
+// src/schema/playlists.sql.ts
 export const playlistsTable = pgTable("playlists", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  name: varchar({ length: 255 }).notNull(),
-  userId: integer()
+  user_id: integer()
     .notNull()
     .references(() => usersTable.id),
+  spotify_playlist_id: varchar({ length: 255 }).notNull(),
+  playlist_name: varchar({ length: 255 }).notNull(),
+  description: varchar({ length: 255 }),
   songId: varchar({ length: 255 }).notNull(),
-  songName: varchar({ length: 255 }).notNull(),
-  songAlbum: varchar({ length: 255 }),
-  songArtist: varchar({ length: 255 }).notNull(),
-  songKinds: varchar({ length: 255 }),
-  liked: integer().default(0),
-  createdAt: varchar({ length: 255 }).notNull(),
-  updatedAt: varchar({ length: 255 }).notNull(),
+  liked: boolean().notNull().default(false),
+  created_at: timestamp()
+    .notNull()
+    .default(sql`now()`),
 });

@@ -1,43 +1,53 @@
-import React from "react";
-import { Box, TextField, Button } from "@mui/material";
+"use client";
+
+import React, { useState } from "react";
+import { Box, TextField, Button, CircularProgress } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
 interface SearchFormProps {
-  onSearch: (search: string) => void;
+  onSubmit: (query: string) => void;
+  isLoading?: boolean;
 }
 
-export const SearchForm: React.FC<SearchFormProps> = ({ onSearch }) => {
-  const [search, setSearch] = React.useState("");
+export function SearchForm({ onSubmit, isLoading = false }: SearchFormProps) {
+  const [query, setQuery] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSearch(search);
+    if (query.trim()) {
+      onSubmit(query);
+    }
   };
 
   return (
-    <Box mt={4} textAlign="center">
-      <form onSubmit={handleSubmit}>
-        <TextField
-          label="曲名・アーティスト名"
-          variant="outlined"
-          fullWidth
-          onChange={(e) => setSearch(e.target.value)}
-          sx={{
-            color: "white",
-            mb: 2,
-            "& .MuiOutlinedInput-root": {
-              "& fieldset": { borderColor: "white" },
-              "&:hover fieldset": { borderColor: "white" },
-              "& input": { color: "white" },
-              "&.Mui-focused fieldset": { borderColor: "white" },
-            },
-            "& .MuiInputLabel-root": { color: "white" },
-            "& .MuiInputLabel-root.Mui-focused": { color: "white" },
-          }}
-        />
-        <Button type="submit" variant="contained">
-          検索
-        </Button>
-      </form>
+    <Box
+      component="form"
+      onSubmit={handleSubmit}
+      sx={{ display: "flex", gap: 1 }}
+    >
+      <TextField
+        fullWidth
+        label="曲名・アーティスト名を入力"
+        variant="outlined"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        disabled={isLoading}
+      />
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        disabled={isLoading}
+        startIcon={
+          isLoading ? (
+            <CircularProgress size={20} color="inherit" />
+          ) : (
+            <SearchIcon />
+          )
+        }
+      >
+        検索
+      </Button>
     </Box>
   );
-};
+}

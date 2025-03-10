@@ -1,59 +1,87 @@
-"use strict";
+// 'use strict';
 
-import {
-  AudioAnalysis,
-  type SearchResult,
-} from "@/interfaces/spotifyInterface";
+// import { AudioAnalysis } from '@/interfaces/spotifyInterface';
+// import { performSpotifySearch } from '@/utils/spotifyApi';
 
-export async function performSearch(
-  search: string | null,
-  token: string | null,
-) {
-  const query = {
-    q: search,
-    offset: 10,
-    limit: 20,
-    type: "track",
-  };
-  const res = await fetch(
-    `https://api.spotify.com/v1/search?q=${query.q}&type=${query.type}&offset=${query.offset}&limit=${query.limit}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    },
-  );
-  if (!res.ok) {
-    throw new Error("Failed to fetch track details");
-  }
+// /**
+//  * Spotifyで曲を検索する関数
+//  * @param query 検索クエリ（曲名）
+//  * @param token Spotifyアクセストークン
+//  * @returns 検索結果のオブジェクト
+//  */
+// interface SpotifySearchResponse {
+//   tracks: {
+//     items: Array;
+//     href: string;
+//     limit: number;
+//     next: string | null;
+//     offset: number;
+//     previous: string | null;
+//     total: number;
+//   };
+// }
 
-  const result: SearchResult = await res.json();
+// export const performSearch = async (
+//   query: string,
+//   offset: number = 0,
+//   limit: number = 20,
+//   token: string,
+// ) => {
+//   if (!query || !token) {
+//     throw new Error('検索クエリまたはトークンが不足しています');
+//   }
 
-  return result;
-}
+//   try {
+//     console.log('検索開始:', { query, token: token.slice(0, 10) + '...' });
 
-export const trackDetails = async (
-  id: string | null,
-  token: string | null,
-): Promise<AudioAnalysis> => {
-  if (!id || !token) {
-    throw new Error("IDまたはトークンが無効です");
-  }
+//     const data: SpotifySearchResponse = await performSpotifySearch(
+//       query,
+//       offset,
+//       limit,
+//       token,
+//     );
 
-  const res = await fetch(`https://api.spotify.com/v1/audio-analysis/${id}`, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+//     if (!data?.tracks?.items) {
+//       console.error('無効な検索結果:', data);
+//       return [];
+//     }
 
-  if (!res.ok) {
-    const errorMessage = await res.text();
-    throw new Error(`Failed to fetch track details: ${errorMessage}`);
-  }
+//     return data.tracks.items;
+//   } catch (error) {
+//     console.error('検索エラー:', error);
+//     throw error;
+//   }
+// };
 
-  const result: AudioAnalysis = await res.json();
-  return result;
-};
+// export default performSearch;
+
+// // トラック詳細取得関数
+// export async function trackDetails(
+//   id: string,
+//   token?: string | null,
+// ): Promise<AudioAnalysis> {
+//   if (!token) {
+//     throw new Error('アクセストークンがありません');
+//   }
+
+//   try {
+//     const response = await fetch(
+//       `https://api.spotify.com/v1/audio-analysis/${id}`,
+//       {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//           'Content-Type': 'application/json',
+//         },
+//       },
+//     );
+
+//     if (!response.ok) {
+//       throw new Error(`API error: ${response.status}`);
+//     }
+
+//     return await response.json();
+//   } catch (error) {
+//     console.error('トラック詳細取得エラー:', error);
+//     return {} as AudioAnalysis;
+//   }
+// }
